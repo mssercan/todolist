@@ -1,42 +1,75 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  StyleSheet,
-} from 'react-native';
-import StoreList from './components/StoreList';
-import store_data from './store_data.json';
+import {View,StyleSheet,FlatList,Alert} from 'react-native';
+import React, {useState} from 'react';
+import TodoList from './components/TodoList';
+import Header from './components/Header/Header';
+import Input from './components/Input';
+import todoData from "./todoData.json"
 
 const App = () => {
-  const renderStore = ({item}) => <StoreList product={item} />;
+  const [todos, setTodos] = useState(todoData);
+  const [text, setText] = useState('');
+
+  const renderTodos = ({item}) => (
+    <TodoList
+      todos={item}
+      changeIsDone={changeIsDone}
+      deleteTodo={deleteTodo}
+    />
+  );
+
+  const handleAddTodo = () => {
+    if(text === "") return Alert.alert("Boş bir ekleme yapamazsınız...")
+    setTodos([...todos,{name: text, isDone: false, id: Date.now() + Math.random()}]);
+    setText('');
+  };
+
+  const changeIsDone = (id) => {
+    const newTodoList = todos.map(todo => {
+      if (todo.id === id) {
+        todo.isDone = !todo.isDone;
+      }
+      return todo;
+    });
+    setTodos(newTodoList);
+  };
+
+  const deleteTodo = (id) => {
+    const newTodoList = todos.filter(todo => todo.id !== id);
+    setTodos(newTodoList);
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Text style={styles.banner_text}>PATIKASTORE</Text>
-        <TextInput style={styles.search} placeholder={'Ara...'} />
-        <FlatList data={store_data} renderItem={renderStore} />
+    <View style={styles.container}>
+
+      <View style={styles.inner_container}>
+        
+        <Header todos={todos} />
+
+        <FlatList 
+        data={todos} 
+        renderItem={renderTodos}
+        />
+
       </View>
-    </SafeAreaView>
+
+      <Input 
+      setText={setText} 
+      text={text} 
+      handleAddTodo={handleAddTodo} />
+
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  banner_text: {
-    color: '#800080',
-    fontSize: 22,
-    margin: 10,
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    backgroundColor: '#102027',
   },
-  search: {
-    backgroundColor: '#e0e0e0',
-    borderRadius: 10,
-    padding: 10,
-    margin: 10,
-  },
+  inner_container:{
+    flex:1,
+  }
 });
 
 export default App;
