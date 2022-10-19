@@ -1,0 +1,43 @@
+[
+    {
+      "id": 1,
+      "name": "Uyanıcam",
+      "isDone": false
+    },
+    {
+      "id": 2,
+      "name": "Uyandığımdan emin olucam",
+      "isDone": true
+    },
+    {
+      "id": 3,
+      "name": "Kahvaltı",
+      "isDone": false
+    },
+    {
+      "id": 4,
+      "name": "Dişleri fırçala",
+      "isDone": true
+    },
+    {
+      "id": 5,
+      "name": "Varoluşsal krizler",
+      "isDone": true
+    },
+    {
+      "id": 6,
+      "name": "Öğlen uykusu",
+      "isDone": false
+    },
+    {
+      "id": 7,
+      "name": "İlaçlar",
+      "isDone": false
+    },
+    {
+      "id": 8,
+      "name": "Genel uyku",
+      "isDone": false
+    }
+
+  ]
